@@ -401,6 +401,22 @@
   footer a { color: rgba(255, 255, 255, 0.6); }
   footer a:hover { color: #FFFFFF; }
 
+  /* Serviços */
+  .services-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 3.5rem; }
+  .service {
+    background: #FFFFFF; border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 2rem 1.75rem; box-shadow: var(--shadow-card);
+    transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .service::before {
+    content: ""; display: block; width: 36px; height: 3px; border-radius: 2px;
+    background: var(--amber); margin-bottom: 1.25rem;
+  }
+  .service:hover { transform: translateY(-4px); border-color: var(--accent-line); box-shadow: var(--shadow-lift); }
+  .service-title { font-family: var(--font-head); font-size: 1.15rem; font-weight: 600; line-height: 1.45; color: var(--navy); }
+  @media (min-width: 640px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -417,6 +433,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#sobre" data-i18n="navAbout">Sobre</a></li>
         <li><a href="#projetos" data-i18n="navProjects">Projetos</a></li>
+        <li><a href="#servicos" data-i18n="navServices">Serviços</a></li>
         <li><a href="#experiencia" data-i18n="navExperience">Experiência</a></li>
         <li><a href="#contato" data-i18n="navContact">Contato</a></li>
       </ul>
@@ -659,6 +676,27 @@
     </div>
   </section>
 
+  <!-- SERVIÇOS -->
+  <section id="servicos" style="border-top:1px solid var(--border);">
+    <div class="container">
+      <p class="eyebrow reveal" data-i18n="servicesEyebrow">Serviços</p>
+      <h2 class="section-title reveal" data-i18n="servicesTitle">Como posso ajudar</h2>
+      <p class="section-lead reveal" data-i18n="servicesLead">Formas de trabalho para times e empresas que querem evoluir sistemas, pessoas e processos.</p>
+
+      <div class="services-grid">
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv1">Desenvolvimento, modernização ou implantação com entregável e prazo definidos</h3></article>
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv2">Suporte contínuo em arquitetura, mentoria e evolução de sistemas</h3></article>
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv3">Atuação pontual em diagnóstico, code review, arquitetura ou destrave técnico</h3></article>
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv4">Condução de entrevistas técnicas para contratação de desenvolvedores Java</h3></article>
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv5">Mentoria técnica para desenvolvedores (júnior a sênior)</h3></article>
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv6">Palestras, eventos e workshops técnicos (arquitetura, IA, boas práticas)</h3></article>
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv7">Captura de processos de onboarding para facilitar a integração de novos colaboradores</h3></article>
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv8">Auditoria de sistemas e processos de desenvolvimento para otimizar tempo e custos</h3></article>
+        <article class="service reveal"><h3 class="service-title" data-i18n="srv9">Sessões individuais ou em grupo sobre Java, Cloud ou IA aplicada ao desenvolvimento</h3></article>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTATO -->
   <section id="contato" class="contact">
     <div class="container contact-inner">
@@ -698,6 +736,17 @@
     const T = {
       pt: {
         htmlLang: 'pt-BR',
+        navServices: 'Serviços', servicesEyebrow: 'Serviços', servicesTitle: 'Como posso ajudar',
+        servicesLead: 'Formas de trabalho para times e empresas que querem evoluir sistemas, pessoas e processos.',
+        srv1: 'Desenvolvimento, modernização ou implantação com entregável e prazo definidos',
+        srv2: 'Suporte contínuo em arquitetura, mentoria e evolução de sistemas',
+        srv3: 'Atuação pontual em diagnóstico, code review, arquitetura ou destrave técnico',
+        srv4: 'Condução de entrevistas técnicas para contratação de desenvolvedores Java',
+        srv5: 'Mentoria técnica para desenvolvedores (júnior a sênior)',
+        srv6: 'Palestras, eventos e workshops técnicos (arquitetura, IA, boas práticas)',
+        srv7: 'Captura de processos de onboarding para facilitar a integração de novos colaboradores',
+        srv8: 'Auditoria de sistemas e processos de desenvolvimento para otimizar tempo e custos',
+        srv9: 'Sessões individuais ou em grupo sobre Java, Cloud ou IA aplicada ao desenvolvimento',
         title: 'José Luciano Julietti Rodrigues de Castro | Engenheiro de Software Java Principal',
         description: 'Engenheiro de Software Java Principal com mais de 20 anos de experiência em Java, microsserviços, arquitetura de sistemas e cloud.',
         navAbout: 'Sobre', navProjects: 'Projetos', navExperience: 'Experiência', navContact: 'Contato',
@@ -743,6 +792,17 @@
       },
       en: {
         htmlLang: 'en',
+        navServices: 'Services', servicesEyebrow: 'Services', servicesTitle: 'How I can help',
+        servicesLead: 'Ways of working with teams and companies that want to evolve systems, people and processes.',
+        srv1: 'Development, modernization or deployment with defined deliverables and timelines',
+        srv2: 'Ongoing support in architecture, mentoring and system evolution',
+        srv3: 'Targeted work on diagnosis, code review, architecture or technical unblocking',
+        srv4: 'Technical interviews to hire Java developers',
+        srv5: 'Technical mentoring for developers (junior to senior)',
+        srv6: 'Talks, events and technical workshops (architecture, AI, best practices)',
+        srv7: 'Mapping onboarding processes to make it easier to integrate new team members',
+        srv8: 'Audit of systems and development processes to optimize time and costs',
+        srv9: 'Individual or group sessions on Java, Cloud or AI applied to software development',
         title: 'José Luciano Julietti Rodrigues de Castro | Principal Java Software Engineer',
         description: 'Principal Java Software Engineer with over 20 years of experience in Java, microservices, system architecture and cloud.',
         navAbout: 'About', navProjects: 'Projects', navExperience: 'Experience', navContact: 'Contact',
@@ -788,6 +848,17 @@
       },
       es: {
         htmlLang: 'es',
+        navServices: 'Servicios', servicesEyebrow: 'Servicios', servicesTitle: 'Cómo puedo ayudar',
+        servicesLead: 'Formas de trabajo para equipos y empresas que quieren evolucionar sistemas, personas y procesos.',
+        srv1: 'Desarrollo, modernización o despliegue con entregables y plazos definidos',
+        srv2: 'Soporte continuo en arquitectura, mentoría y evolución de sistemas',
+        srv3: 'Intervención puntual en diagnóstico, code review, arquitectura o desbloqueo técnico',
+        srv4: 'Conducción de entrevistas técnicas para contratar desarrolladores Java',
+        srv5: 'Mentoría técnica para desarrolladores (junior a senior)',
+        srv6: 'Charlas, eventos y workshops técnicos (arquitectura, IA, buenas prácticas)',
+        srv7: 'Documentación de procesos de onboarding para facilitar la integración de nuevos colaboradores',
+        srv8: 'Auditoría de sistemas y procesos de desarrollo para optimizar tiempo y costos',
+        srv9: 'Sesiones individuales o grupales sobre Java, Cloud o IA aplicada al desarrollo',
         title: 'José Luciano Julietti Rodrigues de Castro | Ingeniero de Software Java Principal',
         description: 'Ingeniero de Software Java Principal con más de 20 años de experiencia en Java, microservicios, arquitectura de sistemas y cloud.',
         navAbout: 'Sobre mí', navProjects: 'Proyectos', navExperience: 'Experiencia', navContact: 'Contacto',
@@ -833,6 +904,17 @@
       },
       fr: {
         htmlLang: 'fr',
+        navServices: 'Services', servicesEyebrow: 'Services', servicesTitle: 'Comment je peux vous aider',
+        servicesLead: 'Modes d’intervention pour les équipes et entreprises qui veulent faire évoluer systèmes, personnes et processus.',
+        srv1: 'Développement, modernisation ou déploiement avec livrables et délais définis',
+        srv2: 'Accompagnement continu en architecture, mentorat et évolution des systèmes',
+        srv3: 'Intervention ponctuelle sur diagnostic, revue de code, architecture ou déblocage technique',
+        srv4: 'Conduite d’entretiens techniques pour recruter des développeurs Java',
+        srv5: 'Mentorat technique pour développeurs (junior à senior)',
+        srv6: 'Conférences, événements et ateliers techniques (architecture, IA, bonnes pratiques)',
+        srv7: 'Formalisation des processus d’onboarding pour faciliter l’intégration des nouveaux collaborateurs',
+        srv8: 'Audit des systèmes et des processus de développement pour optimiser le temps et les coûts',
+        srv9: 'Sessions individuelles ou collectives sur Java, Cloud ou l’IA appliquée au développement',
         title: 'José Luciano Julietti Rodrigues de Castro | Ingénieur logiciel Java Principal',
         description: 'Ingénieur logiciel Java Principal avec plus de 20 ans d’expérience en Java, microservices, architecture de systèmes et cloud.',
         navAbout: 'À propos', navProjects: 'Projets', navExperience: 'Expérience', navContact: 'Contact',
@@ -878,6 +960,17 @@
       },
       de: {
         htmlLang: 'de',
+        navServices: 'Leistungen', servicesEyebrow: 'Leistungen', servicesTitle: 'Wie ich helfen kann',
+        servicesLead: 'Formate der Zusammenarbeit für Teams und Unternehmen, die Systeme, Menschen und Prozesse weiterentwickeln wollen.',
+        srv1: 'Entwicklung, Modernisierung oder Bereitstellung mit festgelegten Ergebnissen und Terminen',
+        srv2: 'Laufende Unterstützung bei Architektur, Mentoring und Weiterentwicklung von Systemen',
+        srv3: 'Gezielter Einsatz für Diagnose, Code-Review, Architektur oder technische Problemlösung',
+        srv4: 'Durchführung technischer Interviews zur Einstellung von Java-Entwicklern',
+        srv5: 'Technisches Mentoring für Entwickler (Junior bis Senior)',
+        srv6: 'Vorträge, Events und technische Workshops (Architektur, KI, Best Practices)',
+        srv7: 'Dokumentation von Onboarding-Prozessen für die Integration neuer Teammitglieder',
+        srv8: 'Audit von Systemen und Entwicklungsprozessen zur Optimierung von Zeit und Kosten',
+        srv9: 'Einzel- oder Gruppensitzungen zu Java, Cloud oder KI in der Softwareentwicklung',
         title: 'José Luciano Julietti Rodrigues de Castro | Principal Java Software Engineer',
         description: 'Principal Java Software Engineer mit über 20 Jahren Erfahrung in Java, Microservices, Systemarchitektur und Cloud.',
         navAbout: 'Über mich', navProjects: 'Projekte', navExperience: 'Erfahrung', navContact: 'Kontakt',
