@@ -10,19 +10,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #2a2c32;
-    --bg-elev: #32353c;
-    --surface: #363940;
-    --border: #4a4e58;
-    --border-strong: #5c616c;
-    --text: #f3f3f5;
-    --text-dim: #cdd0d7;
-    --text-faint: #a4a8b2;
-    --accent: #9dbfe6;
-    --accent-soft: rgba(157, 191, 230, 0.14);
-    --accent-line: rgba(157, 191, 230, 0.5);
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, .2), 0 14px 34px -16px rgba(0, 0, 0, .45);
-    --shadow-lift: 0 2px 4px rgba(0, 0, 0, .2), 0 30px 60px -24px rgba(0, 0, 0, .6);
+    --navy: #0F2440;
+    --bg: #FFFFFF;
+    --bg-elev: #F8FAFC;
+    --surface: #FFFFFF;
+    --border: #E2E8F0;
+    --border-strong: #CBD5E1;
+    --text: #0F172A;
+    --text-dim: #475569;
+    --text-faint: #64748B;
+    --accent: #2563EB;
+    --amber: #F59E0B;
+    --accent-soft: #EFF6FF;
+    --accent-line: rgba(37, 99, 235, 0.35);
+    --shadow-card: 0 1px 2px rgba(15, 23, 42, .04), 0 10px 30px -12px rgba(15, 23, 42, .12);
+    --shadow-lift: 0 12px 40px rgba(29, 78, 216, .12);
     --radius: 14px;
     --ease: cubic-bezier(.2, .7, .2, 1);
     --font-head: "Outfit", system-ui, sans-serif;
@@ -140,7 +142,7 @@
   .lang-btn[aria-pressed="true"] { opacity: 1; border-color: var(--accent-line); background: var(--accent-soft); }
 
   /* Hero */
-  .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 72px; overflow: hidden; }
+  .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 72px; overflow: hidden; position: relative; }
   .hero-grid {
     position: absolute; inset: 0; pointer-events: none;
     background-image:
@@ -310,6 +312,94 @@
     .project { padding: 1.5rem; }
     .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
   }
+
+  /* ===== Estilo VIP Vision: navy, azul, âmbar e superfícies claras ===== */
+  .navbar, .navbar.is-scrolled {
+    background: rgba(255, 255, 255, 0.97);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom-color: var(--border);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
+  }
+  .brand { color: var(--navy); }
+  .brand span { color: var(--accent); }
+  .nav-links a { color: #64748B; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-links a::after { background: var(--accent); }
+  .lang-btn svg { box-shadow: 0 0 0 1px rgba(15, 23, 42, .12); }
+
+  .btn-primary { background: var(--amber); border-color: var(--amber); color: var(--navy); }
+  .btn-primary:hover { background: #FBBF24; border-color: #FBBF24; color: var(--navy); box-shadow: 0 8px 24px rgba(245, 158, 11, .35); }
+
+  /* Alternância de seções */
+  #sobre, #experiencia { background: var(--bg-elev); }
+
+  /* Hero em navy */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a3a6b 55%, #0d3260 100%);
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; right: -200px; width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 65%); pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -150px; left: -100px; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.18), transparent 65%); pointer-events: none;
+  }
+  .hero-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    opacity: 1;
+  }
+  .hero .eyebrow { color: var(--amber); }
+  .hero .eyebrow::before { background: var(--amber); }
+  .hero .hero-name { color: #FFFFFF; }
+  .hero .hero-role { color: var(--amber); }
+  .hero .hero-summary { color: rgba(255, 255, 255, 0.75); }
+  .hero .btn { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.3); }
+  .hero .btn:hover { background: rgba(255, 255, 255, 0.08); border-color: #FFFFFF; }
+  .hero .btn-primary { color: var(--navy); border-color: var(--amber); }
+  .hero .btn-primary:hover { color: var(--navy); }
+  .hero .scroll-hint { color: rgba(255, 255, 255, 0.55); }
+  .hero .scroll-hint::after { background: linear-gradient(var(--amber), transparent); }
+  .hero .hero-card { color: var(--text); }
+  .hero-card .stat-num { color: var(--navy); }
+  .hero-card .stat-label { color: #475569; }
+
+  /* Projetos em cards brancos com sombra suave */
+  .project { background: #FFFFFF; }
+  .project-lang i { background: var(--accent); box-shadow: 0 0 10px rgba(37, 99, 235, .45); }
+  .project:hover { box-shadow: 0 12px 40px rgba(29, 78, 216, .12); }
+
+  /* Contato em navy */
+  .contact {
+    background: linear-gradient(135deg, var(--navy), #1e3a8a);
+    border-top-color: transparent;
+  }
+  .contact .eyebrow { color: var(--amber); }
+  .contact .eyebrow::before { background: var(--amber); }
+  .contact .contact-cta { color: #FFFFFF; }
+  .contact .contact-cta span { color: var(--amber); }
+  .contact .contact-msg { color: rgba(255, 255, 255, 0.72); }
+  .contact-link {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+  .contact-link:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--amber); }
+  .contact-link-label { color: rgba(255, 255, 255, 0.55); }
+  .contact-link-value { color: #FFFFFF; }
+  .contact-link svg { color: rgba(255, 255, 255, 0.6); }
+  .contact-link:hover svg { color: var(--amber); }
+
+  /* Rodapé escuro */
+  footer {
+    background: #060F1E;
+    color: rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  footer a { color: rgba(255, 255, 255, 0.6); }
+  footer a:hover { color: #FFFFFF; }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
