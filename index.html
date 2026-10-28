@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>José Luciano Julietti Rodrigues de Castro | Engenheiro de Software Java Principal</title>
+<meta name="description" content="Engenheiro de Software Java Principal com mais de 20 anos de experiência em Java, microsserviços, arquitetura de sistemas e cloud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-elev: #111118;
+    --surface: #15151f;
+    --border: #22222e;
+    --border-strong: #2e2e3d;
+    --text: #e8e8ef;
+    --text-dim: #9a9aab;
+    --text-faint: #62627a;
+    --accent: #22d3ee;
+    --accent-soft: rgba(34, 211, 238, 0.12);
+    --accent-line: rgba(34, 211, 238, 0.45);
+    --radius: 14px;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+    --font-head: "Outfit", system-ui, sans-serif;
+    --font-body: "Source Sans 3", system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; transition: color .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease); }
+  h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+
+  .container { width: min(1120px, 100% - 3rem); margin-inline: auto; }
+  section { padding: clamp(5rem, 10vw, 8rem) 0; position: relative; }
+
+  .eyebrow {
+    font-family: var(--font-head);
+    font-size: .8125rem;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: 1.25rem;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--accent); }
+
+  .section-title { font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 1rem; }
+  .section-lead { color: var(--text-dim); max-width: 60ch; }
+
+  /* Reveal on scroll */
+  .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .js .reveal.is-visible { opacity: 1; transform: none; }
+  .js .reveal[data-delay="1"] { transition-delay: .1s; }
+  .js .reveal[data-delay="2"] { transition-delay: .2s; }
+  .js .reveal[data-delay="3"] { transition-delay: .3s; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .8rem 1.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: .95rem;
+    color: var(--text);
+    background: transparent;
+    transition: transform .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease), color .3s var(--ease);
+  }
+  .btn:hover { transform: translateY(-2px); border-color: var(--accent-line); background: var(--accent-soft); }
+  .btn:focus-visible, .nav-links a:focus-visible, .nav-toggle:focus-visible, .project-link:focus-visible, .lang-btn:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 3px;
+  }
+  .btn-primary { background: var(--accent); color: #04151a; border-color: var(--accent); font-weight: 600; }
+  .btn-primary:hover { background: #5be4f5; border-color: #5be4f5; color: #04151a; }
+  .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* Navbar */
+  .navbar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    transition: background .4s var(--ease), backdrop-filter .4s var(--ease), border-color .4s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  .navbar.is-scrolled {
+    background: rgba(10, 10, 15, 0.72);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    backdrop-filter: saturate(160%) blur(14px);
+    border-bottom-color: var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 1rem; }
+  .brand { font-family: var(--font-head); font-weight: 600; font-size: 1.05rem; letter-spacing: .02em; }
+  .brand span { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-links { display: flex; gap: 2.25rem; list-style: none; }
+  .nav-links a { font-size: .95rem; color: var(--text-dim); position: relative; padding: .25rem 0; }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--accent);
+    transition: width .35s var(--ease);
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-toggle {
+    display: none; background: none; border: 1px solid var(--border-strong); border-radius: 10px;
+    width: 42px; height: 42px; cursor: pointer; color: var(--text); align-items: center; justify-content: center;
+  }
+  .nav-toggle svg { width: 20px; height: 20px; }
+
+  /* Language switcher */
+  .lang-switch { display: flex; align-items: center; gap: .4rem; }
+  .lang-btn {
+    width: 30px; height: 30px; padding: 0; border-radius: 6px; cursor: pointer;
+    border: 1px solid transparent; background: transparent; opacity: .55;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: opacity .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease), background .3s var(--ease);
+  }
+  .lang-btn svg { width: 20px; height: 14px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(255,255,255,.08); }
+  .lang-btn:hover { opacity: 1; transform: translateY(-1px); }
+  .lang-btn[aria-pressed="true"] { opacity: 1; border-color: var(--accent-line); background: var(--accent-soft); }
+
+  /* Hero */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 72px; overflow: hidden; }
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 70% 60% at 70% 40%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 70% 40%, #000 30%, transparent 75%);
+    opacity: .55;
+  }
+  .hero-inner { position: relative; display: grid; gap: 3rem; grid-template-columns: 1fr; align-items: center; }
+  .hero-name { font-size: clamp(2.6rem, 6.5vw, 4.9rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.02; }
+  .hero-role {
+    font-family: var(--font-head); font-size: clamp(1.15rem, 2.4vw, 1.45rem); font-weight: 400;
+    color: var(--accent); margin: 1.25rem 0 1.5rem;
+  }
+  .hero-summary { color: var(--text-dim); font-size: 1.15rem; max-width: 58ch; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .85rem; }
+  .hero-card {
+    border: 1px solid var(--border); background: linear-gradient(180deg, var(--surface), var(--bg-elev));
+    border-radius: 20px; padding: 2rem; display: none;
+  }
+  .stat-list { list-style: none; display: grid; gap: 1.4rem; }
+  .stat { display: flex; align-items: baseline; gap: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1.1rem; }
+  .stat:last-child { border-bottom: none; padding-bottom: 0; }
+  .stat-num { font-family: var(--font-head); font-size: 2.25rem; font-weight: 600; color: var(--text); min-width: 4.2ch; }
+  .stat-label { color: var(--text-dim); font-size: .95rem; line-height: 1.4; }
+
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-faint);
+    display: flex; flex-direction: column; align-items: center; gap: .6rem;
+  }
+  .scroll-hint::after {
+    content: ""; width: 1px; height: 36px; background: linear-gradient(var(--accent), transparent);
+    animation: drip 2.2s var(--ease) infinite;
+  }
+  @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  /* About */
+  .about-grid { display: grid; gap: 4rem; grid-template-columns: 1fr; }
+  .about-text p { color: var(--text-dim); margin-bottom: 1.1rem; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .skill-group + .skill-group { margin-top: 2.25rem; }
+  .skill-group h3 { font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1rem; font-weight: 500; font-family: var(--font-head); }
+  .tags { display: flex; flex-wrap: wrap; gap: .55rem; }
+  .tag {
+    font-size: .9rem; padding: .4rem .85rem; border-radius: 8px;
+    border: 1px solid var(--border-strong); background: var(--bg-elev); color: var(--text);
+    transition: border-color .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+  }
+  .tag:hover { border-color: var(--accent-line); color: var(--accent); transform: translateY(-1px); }
+  .tag.is-core { border-color: var(--accent-line); color: var(--accent); background: var(--accent-soft); }
+
+  /* Projects */
+  .projects-grid { display: grid; gap: 1.5rem; grid-template-columns: 1fr; margin-top: 3.5rem; }
+  .project {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    display: flex; flex-direction: column; gap: 1.25rem;
+    transition: transform .45s var(--ease), border-color .45s var(--ease), box-shadow .45s var(--ease);
+    overflow: hidden;
+  }
+  .project::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 0%), var(--accent-soft), transparent 40%);
+    opacity: 0; transition: opacity .4s var(--ease);
+  }
+  .project:hover { transform: translateY(-6px); border-color: var(--accent-line); box-shadow: 0 24px 60px -30px rgba(34, 211, 238, .35); }
+  .project:hover::before { opacity: 1; }
+  .project-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .project-index { font-family: var(--font-head); font-size: .85rem; color: var(--text-faint); letter-spacing: .1em; }
+  .project-lang {
+    display: inline-flex; align-items: center; gap: .5rem; font-size: .8rem; color: var(--text-dim);
+    font-family: var(--font-head); letter-spacing: .04em;
+  }
+  .project-lang i { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+  .project h3 { font-size: 1.5rem; word-break: break-word; }
+  .project-desc { color: var(--text-dim); }
+  .project-problem { font-size: .95rem; color: var(--text-dim); border-left: 2px solid var(--accent-line); padding-left: 1rem; }
+  .project-problem strong { color: var(--accent); display: block; margin-bottom: .2rem; font-family: var(--font-head); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+  .diagram { width: 100%; height: auto; padding: 1rem; border: 1px dashed var(--border-strong); border-radius: 12px; background: var(--bg-elev); }
+  .diagram .node { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1; }
+  .diagram .node-accent { fill: var(--accent-soft); stroke: var(--accent-line); stroke-width: 1; }
+  .diagram text { fill: var(--text-dim); font-family: var(--font-head); font-size: 12px; }
+  .diagram .label-strong { fill: var(--text); font-weight: 600; }
+  .diagram .edge { stroke: var(--text-faint); stroke-width: 1.2; fill: none; stroke-dasharray: 4 4; animation: flow 1.6s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -16; } }
+  .project-footer { margin-top: auto; display: flex; flex-direction: column; gap: 1.25rem; }
+  .project-link {
+    display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-head); font-weight: 500;
+    color: var(--text); font-size: .95rem; align-self: flex-start; padding-bottom: 2px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .project-link:hover { color: var(--accent); border-color: var(--accent); }
+  .project-link svg { width: 16px; height: 16px; transition: transform .3s var(--ease); }
+  .project-link:hover svg { transform: translate(2px, -2px); }
+
+  /* Experience */
+  .timeline { position: relative; margin-top: 3.5rem; display: grid; gap: 0; }
+  .timeline::before {
+    content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px;
+    background: linear-gradient(var(--accent-line), var(--border) 30%, var(--border));
+  }
+  .job { position: relative; padding: 0 0 2.75rem 2.5rem; }
+  .job:last-child { padding-bottom: 0; }
+  .job::before {
+    content: ""; position: absolute; left: 0; top: 8px; width: 15px; height: 15px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--border-strong);
+    transition: background .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .job:first-child::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
+  .job-period { font-family: var(--font-head); font-size: .85rem; color: var(--accent); letter-spacing: .04em; margin-bottom: .45rem; }
+  .job h3 { font-size: 1.25rem; margin-bottom: .2rem; }
+  .job-company { color: var(--text-dim); font-size: .98rem; margin-bottom: .75rem; }
+  .job p { color: var(--text-dim); max-width: 75ch; }
+
+  /* Contact */
+  .contact { border-top: 1px solid var(--border); }
+  .contact-inner { display: grid; gap: 3rem; grid-template-columns: 1fr; align-items: start; }
+  .contact-cta { font-family: var(--font-head); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+  .contact-cta span { color: var(--accent); }
+  .contact-msg { color: var(--text-dim); max-width: 52ch; }
+  .contact-links { display: grid; gap: .75rem; }
+  .contact-link {
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    padding: 1.1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+    transition: border-color .3s var(--ease), transform .3s var(--ease), background .3s var(--ease);
+  }
+  .contact-link:hover { border-color: var(--accent-line); transform: translateX(4px); background: var(--bg-elev); }
+  .contact-link-label { font-family: var(--font-head); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); display: block; }
+  .contact-link-value { font-size: 1rem; word-break: break-all; }
+  .contact-link svg { width: 18px; height: 18px; color: var(--text-dim); flex-shrink: 0; transition: color .3s var(--ease); }
+  .contact-link:hover svg { color: var(--accent); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0; color: var(--text-faint); font-size: .9rem; }
+  .footer-inner { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
+  footer a:hover { color: var(--accent); }
+
+  /* Responsive */
+  @media (min-width: 768px) {
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-grid { grid-template-columns: 1.1fr .9fr; }
+    .hero-inner { grid-template-columns: 1.25fr .75fr; }
+    .hero-card { display: block; }
+    .contact-inner { grid-template-columns: 1.1fr .9fr; }
+  }
+  @media (max-width: 767px) {
+    .nav-right { gap: .75rem; }
+    .lang-switch { gap: .2rem; }
+    .lang-btn { width: 26px; height: 26px; }
+    .lang-btn svg { width: 18px; height: 13px; }
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      position: absolute; top: 72px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: rgba(10, 10, 15, .97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      max-height: 0; overflow: hidden; transition: max-height .45s var(--ease);
+    }
+    .nav-links.is-open { max-height: 320px; }
+    .nav-links li a { display: block; padding: 1.1rem 1.5rem; border-top: 1px solid var(--border); }
+    .nav-links a::after { display: none; }
+    .project { padding: 1.5rem; }
+    .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="navbar" id="navbar">
+  <nav class="container nav-inner" aria-label="Navegação principal">
+    <a href="#inicio" class="brand">José<span>.</span>Castro</a>
+    <div class="nav-right">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#sobre" data-i18n="navAbout">Sobre</a></li>
+        <li><a href="#projetos" data-i18n="navProjects">Projetos</a></li>
+        <li><a href="#experiencia" data-i18n="navExperience">Experiência</a></li>
+        <li><a href="#contato" data-i18n="navContact">Contato</a></li>
+      </ul>
+      <div class="lang-switch" role="group" aria-label="Idioma / Language">
+        <button class="lang-btn" type="button" data-lang="pt" aria-pressed="false" title="Português (Brasil)" aria-label="Português (Brasil)">
+          <svg viewBox="0 0 20 14" aria-hidden="true"><defs><clipPath id="cPT"><rect width="20" height="14" rx="2"/></clipPath></defs><g clip-path="url(#cPT)"><rect width="20" height="14" fill="#009c3b"/><path d="M10 1.5 L18.5 7 L10 12.5 L1.5 7 Z" fill="#ffdf00"/><circle cx="10" cy="7" r="3" fill="#002776"/></g></svg>
+        </button>
+        <button class="lang-btn" type="button" data-lang="en" aria-pressed="false" title="English" aria-label="English">
+          <svg viewBox="0 0 20 14" aria-hidden="true"><defs><clipPath id="cEN"><rect width="20" height="14" rx="2"/></clipPath></defs><g clip-path="url(#cEN)"><rect width="20" height="14" fill="#fff"/><path d="M0 0h20v1.08H0zM0 2.15h20v1.08H0zM0 4.31h20v1.08H0zM0 6.46h20v1.08H0zM0 8.62h20v1.08H0zM0 10.77h20v1.08H0zM0 12.92h20v1.08H0z" fill="#b22234"/><rect width="9" height="7.5" fill="#3c3b6e"/></g></svg>
+        </button>
+        <button class="lang-btn" type="button" data-lang="es" aria-pressed="false" title="Español" aria-label="Español">
+          <svg viewBox="0 0 20 14" aria-hidden="true"><defs><clipPath id="cES"><rect width="20" height="14" rx="2"/></clipPath></defs><g clip-path="url(#cES)"><rect width="20" height="14" fill="#c60b1e"/><rect y="3.5" width="20" height="7" fill="#ffc400"/></g></svg>
+        </button>
+        <button class="lang-btn" type="button" data-lang="fr" aria-pressed="false" title="Français" aria-label="Français">
+          <svg viewBox="0 0 20 14" aria-hidden="true"><defs><clipPath id="cFR"><rect width="20" height="14" rx="2"/></clipPath></defs><g clip-path="url(#cFR)"><rect width="7" height="14" fill="#002395"/><rect x="7" width="6" height="14" fill="#fff"/><rect x="13" width="7" height="14" fill="#ed2939"/></g></svg>
+        </button>
+        <button class="lang-btn" type="button" data-lang="de" aria-pressed="false" title="Deutsch" aria-label="Deutsch">
+          <svg viewBox="0 0 20 14" aria-hidden="true"><defs><clipPath id="cDE"><rect width="20" height="14" rx="2"/></clipPath></defs><g clip-path="url(#cDE)"><rect width="20" height="4.67" fill="#000"/><rect y="4.67" width="20" height="4.67" fill="#dd0000"/><rect y="9.33" width="20" height="4.67" fill="#ffce00"/></g></svg>
+        </button>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="heroEyebrow">Disponível para novos desafios</p>
+        <h1 class="hero-name">José Luciano<br>Julietti Rodrigues de Castro</h1>
+        <p class="hero-role" data-i18n="heroRole">Engenheiro de Software Java Principal</p>
+        <p class="hero-summary" data-i18n="heroSummary">Mais de 20 anos construindo sistemas Java, do legado ao cloud-native. Atuo com microsserviços, arquitetura de sistemas distribuídos e observabilidade, e faço a ponte entre negócio e time técnico como referência e mentor.</p>
+        <div class="hero-actions">
+          <a href="#projetos" class="btn btn-primary"><span data-i18n="heroBtnProjects">Ver Projetos</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/joselucianorc/" target="_blank" rel="noopener noreferrer" class="btn">LinkedIn</a>
+          <a href="https://github.com/joselucianorc" target="_blank" rel="noopener noreferrer" class="btn">GitHub</a>
+        </div>
+      </div>
+      <aside class="hero-card reveal" data-delay="2" aria-label="Resumo de carreira">
+        <ul class="stat-list">
+          <li class="stat"><span class="stat-num">20+</span><span class="stat-label" data-i18n="stat1">anos de experiência em desenvolvimento de software</span></li>
+          <li class="stat"><span class="stat-num">Java</span><span class="stat-label" data-i18n="stat2">de Java 5 às versões modernas, com Spring Boot e Spring Cloud</span></li>
+          <li class="stat"><span class="stat-num">Cloud</span><span class="stat-label" data-i18n="stat3">AWS, Azure e GCP com Docker e Kubernetes</span></li>
+        </ul>
+      </aside>
+    </div>
+    <a href="#sobre" class="scroll-hint" data-i18n="scrollHint">Role</a>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="container about-grid">
+      <div class="about-text reveal">
+        <p class="eyebrow" data-i18n="aboutEyebrow">Sobre mim</p>
+        <h2 class="section-title" data-i18n="aboutTitle">Arquitetura, código e pessoas</h2>
+        <p data-i18n="aboutP1">Minha trajetória começou em 2004 e passou por bancos, seguradoras, órgãos públicos e consultorias internacionais. Nesse caminho, trabalhei com sistemas legados em EJB, Struts e JSF e com arquiteturas modernas baseadas em microsserviços, mensageria e containers.</p>
+        <p data-i18n="aboutP2">Hoje atuo com <strong>Spring Boot, Docker, Kubernetes e multicloud</strong>, com foco em observabilidade e em sistemas de alta escala. Também uso LLMs e agentes de IA no desenvolvimento, aplicando Spec-Driven Development para manter a qualidade do código.</p>
+        <p data-i18n="aboutP3">Além do código, tenho experiência como mentor técnico, palestrante em workshops e gatekeeper em entrevistas técnicas. Acredito que bons sistemas nascem de times que se comunicam bem.</p>
+      </div>
+      <div class="reveal" data-delay="1">
+        <div class="skill-group">
+          <h3 data-i18n="skillLangTitle">Linguagens e frameworks</h3>
+          <div class="tags">
+            <span class="tag is-core">Java (SE/EE)</span>
+            <span class="tag is-core">Spring Boot</span>
+            <span class="tag is-core">Spring Data JPA</span>
+            <span class="tag">Spring Security</span>
+            <span class="tag">Spring MVC</span>
+            <span class="tag">Spring Batch</span>
+            <span class="tag">Hibernate</span>
+            <span class="tag">Go</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Python</span>
+            <span class="tag">Node.js</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="skillArchTitle">Arquitetura e mensageria</h3>
+          <div class="tags">
+            <span class="tag is-core" data-i18n="tagMicroservices">Microsserviços</span>
+            <span class="tag is-core" data-i18n="tagEventDriven">Event-Driven</span>
+            <span class="tag">DDD</span>
+            <span class="tag" data-i18n="tagCleanArch">Clean Architecture</span>
+            <span class="tag">SOA</span>
+            <span class="tag">Kafka</span>
+            <span class="tag">RabbitMQ</span>
+            <span class="tag">IBM MQ</span>
+            <span class="tag" data-i18n="tagRestSoap">REST e SOAP</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="skillCloudTitle">Cloud, DevOps e observabilidade</h3>
+          <div class="tags">
+            <span class="tag is-core">Docker</span>
+            <span class="tag is-core">Kubernetes</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Azure</span>
+            <span class="tag">GCP</span>
+            <span class="tag">Jenkins</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">Prometheus</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">Datadog</span>
+            <span class="tag">Splunk</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="skillDataTitle">Dados</h3>
+          <div class="tags">
+            <span class="tag">Oracle</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">SQL Server</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">Redis</span>
+            <span class="tag">Elasticsearch</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETOS -->
+  <section id="projetos" style="border-top:1px solid var(--border);">
+    <div class="container">
+      <p class="eyebrow reveal" data-i18n="projEyebrow">Projetos</p>
+      <h2 class="section-title reveal" data-i18n="projTitle">Repositórios em destaque</h2>
+      <p class="section-lead reveal" data-i18n="projLead">Projetos públicos no GitHub que mostram como estruturo sistemas distribuídos e serviços Java.</p>
+
+      <div class="projects-grid">
+        <article class="project reveal" data-lang="java">
+          <div class="project-head">
+            <span class="project-index">01</span>
+            <span class="project-lang"><i aria-hidden="true"></i>Java</span>
+          </div>
+          <h3>orchestrated_microservices</h3>
+          <p class="project-desc" data-i18n="proj1Desc">Sistema de RH composto por microsserviços orquestrados. Inclui API Gateway, servidor de configuração centralizada, service discovery, autenticação OAuth e serviços de usuário, trabalhador e folha de pagamento.</p>
+          <p class="project-problem"><strong data-i18n="proj1ProblemLabel">Problema resolvido</strong><span data-i18n="proj1ProblemText">Coordena vários serviços com um único ponto de entrada, configuração centralizada e descoberta dinâmica de instâncias, sem acoplamento direto entre módulos.</span></p>
+
+          <svg class="diagram" viewBox="0 0 520 170" role="img" data-i18n-aria="diagramAria" aria-label="Diagrama: cliente acessa o API Gateway, que roteia para os serviços registrados no Eureka, com configuração vinda do Config Server e autenticação via OAuth">
+            <rect class="node" x="10" y="62" width="92" height="44" rx="8"/>
+            <text x="56" y="89" text-anchor="middle" data-i18n="diagClient">Cliente</text>
+            <path class="edge" d="M102 84 H138"/>
+            <rect class="node-accent" x="138" y="62" width="112" height="44" rx="8"/>
+            <text x="194" y="89" text-anchor="middle" class="label-strong" data-i18n="diagGateway">API Gateway</text>
+            <path class="edge" d="M250 84 H286"/>
+            <rect class="node" x="286" y="20" width="110" height="36" rx="8"/>
+            <text x="341" y="43" text-anchor="middle">hr-worker</text>
+            <rect class="node" x="286" y="66" width="110" height="36" rx="8"/>
+            <text x="341" y="89" text-anchor="middle">hr-payroll</text>
+            <rect class="node" x="286" y="112" width="110" height="36" rx="8"/>
+            <text x="341" y="135" text-anchor="middle">hr-user</text>
+            <rect class="node" x="420" y="20" width="92" height="36" rx="8"/>
+            <text x="466" y="43" text-anchor="middle" data-i18n="diagEureka">Eureka</text>
+            <rect class="node" x="420" y="112" width="92" height="36" rx="8"/>
+            <text x="466" y="135" text-anchor="middle" data-i18n="diagConfig">Config</text>
+            <path class="edge" d="M396 38 H420"/>
+            <path class="edge" d="M466 56 V112"/>
+          </svg>
+
+          <div class="tags" aria-label="Stack técnica">
+            <span class="tag is-core">Java</span>
+            <span class="tag">Spring Boot</span>
+            <span class="tag">Spring Cloud</span>
+            <span class="tag">Eureka</span>
+            <span class="tag">Zuul</span>
+            <span class="tag">OAuth2</span>
+            <span class="tag" data-i18n="tagMicroservices">Microsserviços</span>
+          </div>
+
+          <div class="project-footer">
+            <a href="https://github.com/joselucianorc/orchestrated_microservices" target="_blank" rel="noopener noreferrer" class="project-link">
+              <span data-i18n="projViewRepo">Ver repositório</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIÊNCIA -->
+  <section id="experiencia" style="border-top:1px solid var(--border);">
+    <div class="container">
+      <p class="eyebrow reveal" data-i18n="expEyebrow">Experiência</p>
+      <h2 class="section-title reveal" data-i18n="expTitle">Trajetória profissional</h2>
+      <p class="section-lead reveal" data-i18n="expLead">As experiências mais relevantes dos últimos anos, com foco em Java, arquitetura e cloud.</p>
+
+      <div class="timeline">
+        <article class="job reveal">
+          <p class="job-period" data-i18n="job1Period">jul/2026 – set/2026</p>
+          <h3 data-i18n="jobRole">Sênior Java Developer</h3>
+          <p class="job-company">200DEV</p>
+          <p data-i18n="job1Desc">Sustentação de sistemas legados em Java.</p>
+        </article>
+
+        <article class="job reveal">
+          <p class="job-period" data-i18n="job2Period">mai/2021 – jun/2026</p>
+          <h3 data-i18n="jobRole">Sênior Java Developer</h3>
+          <p class="job-company">Globant</p>
+          <p data-i18n="job2Desc">Desenvolvimento full-cycle com Java e Spring (Boot, MVC, Data JPA, Batch e Cloud), com Docker, Kubernetes e multicloud (AWS, Azure e GCP) em projetos internacionais e nacionais para clientes como Disney, Autodesk, MGM, Banco Galícia, Porto Seguro e PagBank. Observabilidade com Prometheus, Grafana, Splunk e Datadog. Mentoria técnica, palestras em workshops e atuação com LLMs e agentes de IA.</p>
+        </article>
+
+        <article class="job reveal">
+          <p class="job-period" data-i18n="job3Period">jul/2020 – abr/2021</p>
+          <h3 data-i18n="jobRole">Sênior Java Developer</h3>
+          <p class="job-company">AlcatéiaRH (Allianz)</p>
+          <p data-i18n="job3Desc">Manutenção e evolução do sistema de emissão de apólices de automóvel, com Java 7 e 8, Struts, webservices SOAP e REST em JBoss EAP e pipeline de CI/CD com Jenkins.</p>
+        </article>
+
+        <article class="job reveal">
+          <p class="job-period" data-i18n="job4Period">jan/2020 – jul/2020</p>
+          <h3 data-i18n="jobRole">Sênior Java Developer</h3>
+          <p class="job-company">Inex (Porto Seguro)</p>
+          <p data-i18n="job4Desc">Evolução de sistemas de seguros de vida em squad Scrum, com Spring, EJB, Hibernate, JPA, IBM MQ e WebSphere. Integração de sistemas Java com um legado em Informix.</p>
+        </article>
+
+        <article class="job reveal">
+          <p class="job-period" data-i18n="job5Period">ago/2018 – jan/2020</p>
+          <h3 data-i18n="jobRole">Sênior Java Developer</h3>
+          <p class="job-company">Vector ITC (Banco Fibra e Santander)</p>
+          <p data-i18n="job5Desc">Sustentação de internet banking em Java 8 e Wildfly na AWS. Arquitetura de sistemas em pipeline DevOps com Git, Jenkins, Docker, OpenShift e SonarQube, com webservices SOAP e REST.</p>
+        </article>
+
+        <article class="job reveal">
+          <p class="job-period" data-i18n="job6Period">jan/2018 – jul/2018</p>
+          <h3 data-i18n="jobRole">Sênior Java Developer</h3>
+          <p class="job-company">AlcatéiaRH (Serasa)</p>
+          <p data-i18n="job6Desc">Desenvolvimento de APIs REST com Java 8, Spring Boot, Spring Security e Spring Data JPA, com testes unitários em JUnit e PowerMockito.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="contact">
+    <div class="container contact-inner">
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="contactEyebrow">Contato</p>
+        <p class="contact-cta" data-i18n="contactCta">Vamos construir sistemas <span>sólidos</span> juntos.</p>
+        <p class="contact-msg" data-i18n="contactMsg">Se você procura um engenheiro Java com experiência em arquitetura, microsserviços e cloud, ou quer trocar ideias sobre o seu sistema, fico à disposição para conversar.</p>
+      </div>
+      <div class="contact-links reveal" data-delay="1">
+        <a href="mailto:joselucianorc@gmail.com" class="contact-link">
+          <span><span class="contact-link-label" data-i18n="labelEmail">E-mail</span><span class="contact-link-value">joselucianorc@gmail.com</span></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/joselucianorc/" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <span><span class="contact-link-label">LinkedIn</span><span class="contact-link-value">linkedin.com/in/joselucianorc</span></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+        <a href="https://github.com/joselucianorc" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <span><span class="contact-link-label">GitHub</span><span class="contact-link-value">github.com/joselucianorc</span></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>&copy; 2026 José Luciano Julietti Rodrigues de Castro</span>
+    <span data-i18n="footerThanks">Obrigado pela visita.</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const T = {
+      pt: {
+        htmlLang: 'pt-BR',
+        title: 'José Luciano Julietti Rodrigues de Castro | Engenheiro de Software Java Principal',
+        description: 'Engenheiro de Software Java Principal com mais de 20 anos de experiência em Java, microsserviços, arquitetura de sistemas e cloud.',
+        navAbout: 'Sobre', navProjects: 'Projetos', navExperience: 'Experiência', navContact: 'Contato',
+        openMenu: 'Abrir menu', closeMenu: 'Fechar menu',
+        heroEyebrow: 'Disponível para novos desafios',
+        heroRole: 'Engenheiro de Software Java Principal',
+        heroSummary: 'Mais de 20 anos construindo sistemas Java, do legado ao cloud-native. Atuo com microsserviços, arquitetura de sistemas distribuídos e observabilidade, e faço a ponte entre negócio e time técnico como referência e mentor.',
+        heroBtnProjects: 'Ver Projetos',
+        stat1: 'anos de experiência em desenvolvimento de software',
+        stat2: 'de Java 5 às versões modernas, com Spring Boot e Spring Cloud',
+        stat3: 'AWS, Azure e GCP com Docker e Kubernetes',
+        scrollHint: 'Role',
+        aboutEyebrow: 'Sobre mim',
+        aboutTitle: 'Arquitetura, código e pessoas',
+        aboutP1: 'Minha trajetória começou em 2004 e passou por bancos, seguradoras, órgãos públicos e consultorias internacionais. Nesse caminho, trabalhei com sistemas legados em EJB, Struts e JSF e com arquiteturas modernas baseadas em microsserviços, mensageria e containers.',
+        aboutP2: 'Hoje atuo com <strong>Spring Boot, Docker, Kubernetes e multicloud</strong>, com foco em observabilidade e em sistemas de alta escala. Também uso LLMs e agentes de IA no desenvolvimento, aplicando Spec-Driven Development para manter a qualidade do código.',
+        aboutP3: 'Além do código, tenho experiência como mentor técnico, palestrante em workshops e gatekeeper em entrevistas técnicas. Acredito que bons sistemas nascem de times que se comunicam bem.',
+        skillLangTitle: 'Linguagens e frameworks', skillArchTitle: 'Arquitetura e mensageria',
+        skillCloudTitle: 'Cloud, DevOps e observabilidade', skillDataTitle: 'Dados',
+        tagMicroservices: 'Microsserviços', tagEventDriven: 'Event-Driven', tagCleanArch: 'Clean Architecture', tagRestSoap: 'REST e SOAP',
+        projEyebrow: 'Projetos', projTitle: 'Repositórios em destaque',
+        projLead: 'Projetos públicos no GitHub que mostram como estruturo sistemas distribuídos e serviços Java.',
+        proj1Desc: 'Sistema de RH composto por microsserviços orquestrados. Inclui API Gateway, servidor de configuração centralizada, service discovery, autenticação OAuth e serviços de usuário, trabalhador e folha de pagamento.',
+        proj1ProblemLabel: 'Problema resolvido',
+        proj1ProblemText: 'Coordena vários serviços com um único ponto de entrada, configuração centralizada e descoberta dinâmica de instâncias, sem acoplamento direto entre módulos.',
+        diagramAria: 'Diagrama: cliente acessa o API Gateway, que roteia para os serviços registrados no Eureka, com configuração vinda do Config Server e autenticação via OAuth',
+        diagClient: 'Cliente', diagGateway: 'API Gateway', diagEureka: 'Eureka', diagConfig: 'Config',
+        projViewRepo: 'Ver repositório',
+        expEyebrow: 'Experiência', expTitle: 'Trajetória profissional',
+        expLead: 'As experiências mais relevantes dos últimos anos, com foco em Java, arquitetura e cloud.',
+        jobRole: 'Sênior Java Developer',
+        job1Period: 'jul/2026 – set/2026', job1Desc: 'Sustentação de sistemas legados em Java.',
+        job2Period: 'mai/2021 – jun/2026', job2Desc: 'Desenvolvimento full-cycle com Java e Spring (Boot, MVC, Data JPA, Batch e Cloud), com Docker, Kubernetes e multicloud (AWS, Azure e GCP) em projetos internacionais e nacionais para clientes como Disney, Autodesk, MGM, Banco Galícia, Porto Seguro e PagBank. Observabilidade com Prometheus, Grafana, Splunk e Datadog. Mentoria técnica, palestras em workshops e atuação com LLMs e agentes de IA.',
+        job3Period: 'jul/2020 – abr/2021', job3Desc: 'Manutenção e evolução do sistema de emissão de apólices de automóvel, com Java 7 e 8, Struts, webservices SOAP e REST em JBoss EAP e pipeline de CI/CD com Jenkins.',
+        job4Period: 'jan/2020 – jul/2020', job4Desc: 'Evolução de sistemas de seguros de vida em squad Scrum, com Spring, EJB, Hibernate, JPA, IBM MQ e WebSphere. Integração de sistemas Java com um legado em Informix.',
+        job5Period: 'ago/2018 – jan/2020', job5Desc: 'Sustentação de internet banking em Java 8 e Wildfly na AWS. Arquitetura de sistemas em pipeline DevOps com Git, Jenkins, Docker, OpenShift e SonarQube, com webservices SOAP e REST.',
+        job6Period: 'jan/2018 – jul/2018', job6Desc: 'Desenvolvimento de APIs REST com Java 8, Spring Boot, Spring Security e Spring Data JPA, com testes unitários em JUnit e PowerMockito.',
+        contactEyebrow: 'Contato',
+        contactCta: 'Vamos construir sistemas <span>sólidos</span> juntos.',
+        contactMsg: 'Se você procura um engenheiro Java com experiência em arquitetura, microsserviços e cloud, ou quer trocar ideias sobre o seu sistema, fico à disposição para conversar.',
+        labelEmail: 'E-mail',
+        footerThanks: 'Obrigado pela visita.'
+      },
+      en: {
+        htmlLang: 'en',
+        title: 'José Luciano Julietti Rodrigues de Castro | Principal Java Software Engineer',
+        description: 'Principal Java Software Engineer with over 20 years of experience in Java, microservices, system architecture and cloud.',
+        navAbout: 'About', navProjects: 'Projects', navExperience: 'Experience', navContact: 'Contact',
+        openMenu: 'Open menu', closeMenu: 'Close menu',
+        heroEyebrow: 'Available for new challenges',
+        heroRole: 'Principal Java Software Engineer',
+        heroSummary: 'Over 20 years building Java systems, from legacy to cloud-native. I work on microservices, distributed system architecture and observability, bridging business and engineering teams as a technical reference and mentor.',
+        heroBtnProjects: 'View Projects',
+        stat1: 'years of experience in software development',
+        stat2: 'from Java 5 to modern versions, with Spring Boot and Spring Cloud',
+        stat3: 'AWS, Azure and GCP with Docker and Kubernetes',
+        scrollHint: 'Scroll',
+        aboutEyebrow: 'About me',
+        aboutTitle: 'Architecture, code and people',
+        aboutP1: 'My career started in 2004 and took me through banks, insurers, public institutions and international consultancies. Along the way I worked with legacy systems in EJB, Struts and JSF, and with modern architectures based on microservices, messaging and containers.',
+        aboutP2: 'Today I work with <strong>Spring Boot, Docker, Kubernetes and multicloud</strong>, focusing on observability and high-scale systems. I also use LLMs and AI agents in development, applying Spec-Driven Development to keep code quality high.',
+        aboutP3: 'Beyond code, I have experience as a technical mentor, workshop speaker and gatekeeper in technical interviews. I believe good systems come from teams that communicate well.',
+        skillLangTitle: 'Languages and frameworks', skillArchTitle: 'Architecture and messaging',
+        skillCloudTitle: 'Cloud, DevOps and observability', skillDataTitle: 'Data',
+        tagMicroservices: 'Microservices', tagEventDriven: 'Event-Driven', tagCleanArch: 'Clean Architecture', tagRestSoap: 'REST and SOAP',
+        projEyebrow: 'Projects', projTitle: 'Featured repositories',
+        projLead: 'Public GitHub projects that show how I structure distributed systems and Java services.',
+        proj1Desc: 'HR system built from orchestrated microservices. It includes an API Gateway, a centralized configuration server, service discovery, OAuth authentication, and user, worker and payroll services.',
+        proj1ProblemLabel: 'Problem solved',
+        proj1ProblemText: 'Coordinates several services behind a single entry point, with centralized configuration and dynamic instance discovery, avoiding direct coupling between modules.',
+        diagramAria: 'Diagram: the client calls the API Gateway, which routes to services registered in Eureka, with configuration from the Config Server and OAuth authentication',
+        diagClient: 'Client', diagGateway: 'API Gateway', diagEureka: 'Eureka', diagConfig: 'Config',
+        projViewRepo: 'View repository',
+        expEyebrow: 'Experience', expTitle: 'Professional journey',
+        expLead: 'The most relevant roles of recent years, focused on Java, architecture and cloud.',
+        jobRole: 'Senior Java Developer',
+        job1Period: 'Jul 2026 – Sep 2026', job1Desc: 'Maintenance of legacy systems in Java.',
+        job2Period: 'May 2021 – Jun 2026', job2Desc: 'Full-cycle development with Java and Spring (Boot, MVC, Data JPA, Batch and Cloud), with Docker, Kubernetes and multicloud (AWS, Azure and GCP) on international and national projects for clients such as Disney, Autodesk, MGM, Banco Galícia, Porto Seguro and PagBank. Observability with Prometheus, Grafana, Splunk and Datadog. Technical mentoring, workshop talks and work with LLMs and AI agents.',
+        job3Period: 'Jul 2020 – Apr 2021', job3Desc: 'Maintenance and evolution of the car insurance policy issuance system, using Java 7 and 8, Struts, SOAP and REST web services on JBoss EAP, and a Jenkins CI/CD pipeline.',
+        job4Period: 'Jan 2020 – Jul 2020', job4Desc: 'Evolution of life insurance systems in a Scrum squad, using Spring, EJB, Hibernate, JPA, IBM MQ and WebSphere. Integration of Java systems with an Informix legacy system.',
+        job5Period: 'Aug 2018 – Jan 2020', job5Desc: 'Maintenance of an internet banking platform on Java 8 and Wildfly on AWS. System architecture in a DevOps pipeline with Git, Jenkins, Docker, OpenShift and SonarQube, with SOAP and REST web services.',
+        job6Period: 'Jan 2018 – Jul 2018', job6Desc: 'Development of REST APIs with Java 8, Spring Boot, Spring Security and Spring Data JPA, with unit tests in JUnit and PowerMockito.',
+        contactEyebrow: 'Contact',
+        contactCta: 'Let’s build <span>solid</span> systems together.',
+        contactMsg: 'If you are looking for a Java engineer with experience in architecture, microservices and cloud, or want to discuss your system, I am happy to talk.',
+        labelEmail: 'Email',
+        footerThanks: 'Thanks for visiting.'
+      },
+      es: {
+        htmlLang: 'es',
+        title: 'José Luciano Julietti Rodrigues de Castro | Ingeniero de Software Java Principal',
+        description: 'Ingeniero de Software Java Principal con más de 20 años de experiencia en Java, microservicios, arquitectura de sistemas y cloud.',
+        navAbout: 'Sobre mí', navProjects: 'Proyectos', navExperience: 'Experiencia', navContact: 'Contacto',
+        openMenu: 'Abrir menú', closeMenu: 'Cerrar menú',
+        heroEyebrow: 'Disponible para nuevos desafíos',
+        heroRole: 'Ingeniero de Software Java Principal',
+        heroSummary: 'Más de 20 años construyendo sistemas Java, desde el legado hasta el cloud-native. Trabajo con microservicios, arquitectura de sistemas distribuidos y observabilidad, y conecto negocio y equipo técnico como referente y mentor.',
+        heroBtnProjects: 'Ver Proyectos',
+        stat1: 'años de experiencia en desarrollo de software',
+        stat2: 'desde Java 5 hasta las versiones modernas, con Spring Boot y Spring Cloud',
+        stat3: 'AWS, Azure y GCP con Docker y Kubernetes',
+        scrollHint: 'Desplázate',
+        aboutEyebrow: 'Sobre mí',
+        aboutTitle: 'Arquitectura, código y personas',
+        aboutP1: 'Mi trayectoria comenzó en 2004 y pasó por bancos, aseguradoras, organismos públicos y consultoras internacionales. En ese camino trabajé con sistemas heredados en EJB, Struts y JSF, y con arquitecturas modernas basadas en microservicios, mensajería y contenedores.',
+        aboutP2: 'Hoy trabajo con <strong>Spring Boot, Docker, Kubernetes y multicloud</strong>, con foco en observabilidad y sistemas de alta escala. También uso LLMs y agentes de IA en el desarrollo, aplicando Spec-Driven Development para mantener la calidad del código.',
+        aboutP3: 'Además del código, tengo experiencia como mentor técnico, ponente en workshops y gatekeeper en entrevistas técnicas. Creo que los buenos sistemas nacen de equipos que se comunican bien.',
+        skillLangTitle: 'Lenguajes y frameworks', skillArchTitle: 'Arquitectura y mensajería',
+        skillCloudTitle: 'Cloud, DevOps y observabilidad', skillDataTitle: 'Datos',
+        tagMicroservices: 'Microservicios', tagEventDriven: 'Orientado a eventos', tagCleanArch: 'Arquitectura limpia', tagRestSoap: 'REST y SOAP',
+        projEyebrow: 'Proyectos', projTitle: 'Repositorios destacados',
+        projLead: 'Proyectos públicos en GitHub que muestran cómo estructuro sistemas distribuidos y servicios Java.',
+        proj1Desc: 'Sistema de RRHH compuesto por microservicios orquestados. Incluye API Gateway, servidor de configuración centralizada, service discovery, autenticación OAuth y servicios de usuario, trabajador y nómina.',
+        proj1ProblemLabel: 'Problema resuelto',
+        proj1ProblemText: 'Coordina varios servicios con un único punto de entrada, configuración centralizada y descubrimiento dinámico de instancias, sin acoplamiento directo entre módulos.',
+        diagramAria: 'Diagrama: el cliente accede al API Gateway, que enruta a los servicios registrados en Eureka, con configuración del Config Server y autenticación OAuth',
+        diagClient: 'Cliente', diagGateway: 'API Gateway', diagEureka: 'Eureka', diagConfig: 'Config',
+        projViewRepo: 'Ver repositorio',
+        expEyebrow: 'Experiencia', expTitle: 'Trayectoria profesional',
+        expLead: 'Las experiencias más relevantes de los últimos años, con foco en Java, arquitectura y cloud.',
+        jobRole: 'Desarrollador Java Senior',
+        job1Period: 'jul 2026 – sep 2026', job1Desc: 'Mantenimiento de sistemas heredados en Java.',
+        job2Period: 'may 2021 – jun 2026', job2Desc: 'Desarrollo full-cycle con Java y Spring (Boot, MVC, Data JPA, Batch y Cloud), con Docker, Kubernetes y multicloud (AWS, Azure y GCP) en proyectos internacionales y nacionales para clientes como Disney, Autodesk, MGM, Banco Galícia, Porto Seguro y PagBank. Observabilidad con Prometheus, Grafana, Splunk y Datadog. Mentoría técnica, charlas en workshops y trabajo con LLMs y agentes de IA.',
+        job3Period: 'jul 2020 – abr 2021', job3Desc: 'Mantenimiento y evolución del sistema de emisión de pólizas de automóviles, con Java 7 y 8, Struts, web services SOAP y REST en JBoss EAP y pipeline de CI/CD con Jenkins.',
+        job4Period: 'ene 2020 – jul 2020', job4Desc: 'Evolución de sistemas de seguros de vida en un squad Scrum, con Spring, EJB, Hibernate, JPA, IBM MQ y WebSphere. Integración de sistemas Java con un legado en Informix.',
+        job5Period: 'ago 2018 – ene 2020', job5Desc: 'Mantenimiento de internet banking en Java 8 y Wildfly en AWS. Arquitectura de sistemas en pipeline DevOps con Git, Jenkins, Docker, OpenShift y SonarQube, con web services SOAP y REST.',
+        job6Period: 'ene 2018 – jul 2018', job6Desc: 'Desarrollo de APIs REST con Java 8, Spring Boot, Spring Security y Spring Data JPA, con pruebas unitarias en JUnit y PowerMockito.',
+        contactEyebrow: 'Contacto',
+        contactCta: 'Construyamos sistemas <span>sólidos</span> juntos.',
+        contactMsg: 'Si buscas un ingeniero Java con experiencia en arquitectura, microservicios y cloud, o quieres conversar sobre tu sistema, con gusto hablamos.',
+        labelEmail: 'Correo',
+        footerThanks: 'Gracias por tu visita.'
+      },
+      fr: {
+        htmlLang: 'fr',
+        title: 'José Luciano Julietti Rodrigues de Castro | Ingénieur logiciel Java Principal',
+        description: 'Ingénieur logiciel Java Principal avec plus de 20 ans d’expérience en Java, microservices, architecture de systèmes et cloud.',
+        navAbout: 'À propos', navProjects: 'Projets', navExperience: 'Expérience', navContact: 'Contact',
+        openMenu: 'Ouvrir le menu', closeMenu: 'Fermer le menu',
+        heroEyebrow: 'Disponible pour de nouveaux défis',
+        heroRole: 'Ingénieur logiciel Java Principal',
+        heroSummary: 'Plus de 20 ans à concevoir des systèmes Java, du legacy au cloud-native. Je travaille sur les microservices, l’architecture de systèmes distribués et l’observabilité, et je fais le lien entre métier et équipes techniques en tant que référent et mentor.',
+        heroBtnProjects: 'Voir les projets',
+        stat1: 'ans d’expérience en développement logiciel',
+        stat2: 'de Java 5 aux versions récentes, avec Spring Boot et Spring Cloud',
+        stat3: 'AWS, Azure et GCP avec Docker et Kubernetes',
+        scrollHint: 'Défiler',
+        aboutEyebrow: 'À propos de moi',
+        aboutTitle: 'Architecture, code et humains',
+        aboutP1: 'Mon parcours a commencé en 2004 et m’a conduit dans des banques, des assurances, des institutions publiques et des cabinets de conseil internationaux. J’ai travaillé sur des systèmes legacy en EJB, Struts et JSF, ainsi que sur des architectures modernes basées sur les microservices, la messagerie et les conteneurs.',
+        aboutP2: 'Aujourd’hui, je travaille avec <strong>Spring Boot, Docker, Kubernetes et le multicloud</strong>, en me concentrant sur l’observabilité et les systèmes à grande échelle. J’utilise aussi les LLM et les agents IA dans le développement, avec le Spec-Driven Development pour garder un code de qualité.',
+        aboutP3: 'Au-delà du code, j’ai une expérience de mentor technique, d’intervenant en ateliers et de gatekeeper lors d’entretiens techniques. Je crois que de bons systèmes naissent d’équipes qui communiquent bien.',
+        skillLangTitle: 'Langages et frameworks', skillArchTitle: 'Architecture et messagerie',
+        skillCloudTitle: 'Cloud, DevOps et observabilité', skillDataTitle: 'Données',
+        tagMicroservices: 'Microservices', tagEventDriven: 'Event-Driven', tagCleanArch: 'Clean Architecture', tagRestSoap: 'REST et SOAP',
+        projEyebrow: 'Projets', projTitle: 'Dépôts en vedette',
+        projLead: 'Projets publics sur GitHub qui montrent comment je structure les systèmes distribués et les services Java.',
+        proj1Desc: 'Système RH composé de microservices orchestrés. Il comprend une API Gateway, un serveur de configuration centralisé, une découverte de services, une authentification OAuth et des services utilisateur, employé et paie.',
+        proj1ProblemLabel: 'Problème résolu',
+        proj1ProblemText: 'Coordonne plusieurs services derrière un point d’entrée unique, avec une configuration centralisée et une découverte dynamique des instances, sans couplage direct entre les modules.',
+        diagramAria: 'Schéma : le client appelle l’API Gateway, qui route vers les services enregistrés dans Eureka, avec une configuration issue du Config Server et une authentification OAuth',
+        diagClient: 'Client', diagGateway: 'API Gateway', diagEureka: 'Eureka', diagConfig: 'Config',
+        projViewRepo: 'Voir le dépôt',
+        expEyebrow: 'Expérience', expTitle: 'Parcours professionnel',
+        expLead: 'Les expériences les plus pertinentes de ces dernières années, centrées sur Java, l’architecture et le cloud.',
+        jobRole: 'Développeur Java Senior',
+        job1Period: 'juil. 2026 – sept. 2026', job1Desc: 'Maintenance de systèmes legacy en Java.',
+        job2Period: 'mai 2021 – juin 2026', job2Desc: 'Développement full-cycle avec Java et Spring (Boot, MVC, Data JPA, Batch et Cloud), avec Docker, Kubernetes et le multicloud (AWS, Azure et GCP) sur des projets internationaux et nationaux pour des clients comme Disney, Autodesk, MGM, Banco Galícia, Porto Seguro et PagBank. Observabilité avec Prometheus, Grafana, Splunk et Datadog. Mentorat technique, interventions en ateliers et travail avec les LLM et agents IA.',
+        job3Period: 'juil. 2020 – avr. 2021', job3Desc: 'Maintenance et évolution du système d’émission de polices d’assurance automobile, avec Java 7 et 8, Struts, web services SOAP et REST sur JBoss EAP, et un pipeline CI/CD avec Jenkins.',
+        job4Period: 'janv. 2020 – juil. 2020', job4Desc: 'Évolution de systèmes d’assurance vie dans une équipe Scrum, avec Spring, EJB, Hibernate, JPA, IBM MQ et WebSphere. Intégration de systèmes Java avec un legacy Informix.',
+        job5Period: 'août 2018 – janv. 2020', job5Desc: 'Maintenance de la banque en ligne en Java 8 et Wildfly sur AWS. Architecture de systèmes dans un pipeline DevOps avec Git, Jenkins, Docker, OpenShift et SonarQube, avec des web services SOAP et REST.',
+        job6Period: 'janv. 2018 – juil. 2018', job6Desc: 'Développement d’APIs REST avec Java 8, Spring Boot, Spring Security et Spring Data JPA, avec des tests unitaires en JUnit et PowerMockito.',
+        contactEyebrow: 'Contact',
+        contactCta: 'Construisons ensemble des systèmes <span>solides</span>.',
+        contactMsg: 'Si vous recherchez un ingénieur Java expérimenté en architecture, microservices et cloud, ou si vous souhaitez échanger sur votre système, je suis disponible pour en discuter.',
+        labelEmail: 'E-mail',
+        footerThanks: 'Merci de votre visite.'
+      },
+      de: {
+        htmlLang: 'de',
+        title: 'José Luciano Julietti Rodrigues de Castro | Principal Java Software Engineer',
+        description: 'Principal Java Software Engineer mit über 20 Jahren Erfahrung in Java, Microservices, Systemarchitektur und Cloud.',
+        navAbout: 'Über mich', navProjects: 'Projekte', navExperience: 'Erfahrung', navContact: 'Kontakt',
+        openMenu: 'Menü öffnen', closeMenu: 'Menü schließen',
+        heroEyebrow: 'Offen für neue Herausforderungen',
+        heroRole: 'Principal Java Software Engineer',
+        heroSummary: 'Über 20 Jahre Erfahrung im Bau von Java-Systemen, von Legacy bis Cloud-native. Ich arbeite an Microservices, verteilter Systemarchitektur und Observability und verbinde als technische Referenz und Mentor Fachbereich und Entwicklungsteams.',
+        heroBtnProjects: 'Projekte ansehen',
+        stat1: 'Jahre Erfahrung in der Softwareentwicklung',
+        stat2: 'von Java 5 bis zu modernen Versionen, mit Spring Boot und Spring Cloud',
+        stat3: 'AWS, Azure und GCP mit Docker und Kubernetes',
+        scrollHint: 'Scrollen',
+        aboutEyebrow: 'Über mich',
+        aboutTitle: 'Architektur, Code und Menschen',
+        aboutP1: 'Meine Laufbahn begann 2004 und führte mich durch Banken, Versicherungen, öffentliche Einrichtungen und internationale Beratungen. Dabei habe ich mit Legacy-Systemen in EJB, Struts und JSF gearbeitet sowie mit modernen Architekturen auf Basis von Microservices, Messaging und Containern.',
+        aboutP2: 'Heute arbeite ich mit <strong>Spring Boot, Docker, Kubernetes und Multicloud</strong>, mit Fokus auf Observability und hochskalierte Systeme. Außerdem nutze ich LLMs und KI-Agenten in der Entwicklung und setze Spec-Driven Development ein, um die Codequalität zu sichern.',
+        aboutP3: 'Neben dem Programmieren habe ich Erfahrung als technischer Mentor, Workshop-Referent und Gatekeeper in technischen Interviews. Ich glaube, dass gute Systeme aus Teams entstehen, die gut miteinander kommunizieren.',
+        skillLangTitle: 'Sprachen und Frameworks', skillArchTitle: 'Architektur und Messaging',
+        skillCloudTitle: 'Cloud, DevOps und Observability', skillDataTitle: 'Daten',
+        tagMicroservices: 'Microservices', tagEventDriven: 'Event-Driven', tagCleanArch: 'Clean Architecture', tagRestSoap: 'REST und SOAP',
+        projEyebrow: 'Projekte', projTitle: 'Ausgewählte Repositories',
+        projLead: 'Öffentliche GitHub-Projekte, die zeigen, wie ich verteilte Systeme und Java-Services strukturiere.',
+        proj1Desc: 'HR-System aus orchestrierten Microservices. Es umfasst ein API Gateway, einen zentralen Konfigurationsserver, Service Discovery, OAuth-Authentifizierung sowie Benutzer-, Mitarbeiter- und Lohnabrechnungsdienste.',
+        proj1ProblemLabel: 'Gelöstes Problem',
+        proj1ProblemText: 'Koordiniert mehrere Dienste über einen einzigen Einstiegspunkt, mit zentraler Konfiguration und dynamischer Instanzerkennung, ohne direkte Kopplung zwischen den Modulen.',
+        diagramAria: 'Diagramm: der Client ruft das API Gateway auf, das an die in Eureka registrierten Dienste weiterleitet, mit Konfiguration vom Config Server und OAuth-Authentifizierung',
+        diagClient: 'Client', diagGateway: 'API Gateway', diagEureka: 'Eureka', diagConfig: 'Config',
+        projViewRepo: 'Repository ansehen',
+        expEyebrow: 'Erfahrung', expTitle: 'Beruflicher Werdegang',
+        expLead: 'Die relevantesten Stationen der letzten Jahre, mit Fokus auf Java, Architektur und Cloud.',
+        jobRole: 'Senior Java-Entwickler',
+        job1Period: 'Juli 2026 – Sept. 2026', job1Desc: 'Wartung von Legacy-Systemen in Java.',
+        job2Period: 'Mai 2021 – Juni 2026', job2Desc: 'Full-Cycle-Entwicklung mit Java und Spring (Boot, MVC, Data JPA, Batch und Cloud), mit Docker, Kubernetes und Multicloud (AWS, Azure und GCP) in internationalen und nationalen Projekten für Kunden wie Disney, Autodesk, MGM, Banco Galícia, Porto Seguro und PagBank. Observability mit Prometheus, Grafana, Splunk und Datadog. Technisches Mentoring, Workshop-Vorträge und Arbeit mit LLMs und KI-Agenten.',
+        job3Period: 'Juli 2020 – Apr. 2021', job3Desc: 'Wartung und Weiterentwicklung des Systems zur Ausstellung von Kfz-Versicherungspolicen, mit Java 7 und 8, Struts, SOAP- und REST-Webservices auf JBoss EAP sowie einer CI/CD-Pipeline mit Jenkins.',
+        job4Period: 'Jan. 2020 – Juli 2020', job4Desc: 'Weiterentwicklung von Lebensversicherungssystemen in einem Scrum-Team, mit Spring, EJB, Hibernate, JPA, IBM MQ und WebSphere. Integration von Java-Systemen mit einem Informix-Legacy-System.',
+        job5Period: 'Aug. 2018 – Jan. 2020', job5Desc: 'Wartung einer Internet-Banking-Plattform mit Java 8 und Wildfly auf AWS. Systemarchitektur in einer DevOps-Pipeline mit Git, Jenkins, Docker, OpenShift und SonarQube, mit SOAP- und REST-Webservices.',
+        job6Period: 'Jan. 2018 – Juli 2018', job6Desc: 'Entwicklung von REST-APIs mit Java 8, Spring Boot, Spring Security und Spring Data JPA, mit Unit-Tests in JUnit und PowerMockito.',
+        contactEyebrow: 'Kontakt',
+        contactCta: 'Lassen Sie uns gemeinsam <span>solide</span> Systeme bauen.',
+        contactMsg: 'Wenn Sie einen Java-Ingenieur mit Erfahrung in Architektur, Microservices und Cloud suchen oder über Ihr System sprechen möchten, freue ich mich auf den Austausch.',
+        labelEmail: 'E-Mail',
+        footerThanks: 'Danke für Ihren Besuch.'
+      }
+    };
+
+    const SUPPORTED = Object.keys(T);
+    const STORAGE_KEY = 'portfolio-lang';
+    const html = document.documentElement;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    const langButtons = document.querySelectorAll('.lang-btn');
+    let currentLang = 'pt';
+
+    function detectLang() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved && SUPPORTED.includes(saved)) return saved;
+      } catch (e) { /* storage indisponível */ }
+      const browser = (navigator.language || 'pt').slice(0, 2).toLowerCase();
+      return SUPPORTED.includes(browser) ? browser : 'pt';
+    }
+
+    function applyLang(lang) {
+      const d = T[lang];
+      currentLang = lang;
+      html.lang = d.htmlLang;
+      document.title = d.title;
+      if (metaDesc) metaDesc.setAttribute('content', d.description);
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const value = d[el.dataset.i18n];
+        if (value !== undefined) el.innerHTML = value;
+      });
+      document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const value = d[el.dataset.i18nAria];
+        if (value !== undefined) el.setAttribute('aria-label', value);
+      });
+
+      const open = navLinks.classList.contains('is-open');
+      navToggle.setAttribute('aria-label', open ? d.closeMenu : d.openMenu);
+
+      langButtons.forEach(btn => {
+        const active = btn.dataset.lang === lang;
+        btn.setAttribute('aria-pressed', String(active));
+      });
+
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* ignora */ }
+    }
+
+    langButtons.forEach(btn => btn.addEventListener('click', () => applyLang(btn.dataset.lang)));
+
+    // Navbar: blur/transparency after scroll
+    const onScroll = () => navbar.classList.toggle('is-scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Mobile menu
+    navToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? T[currentLang].closeMenu : T[currentLang].openMenu);
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', T[currentLang].openMenu);
+    }));
+
+    // Fade-in on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      reveals.forEach(el => io.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('is-visible'));
+    }
+
+    // Cursor-following glow on project cards
+    document.querySelectorAll('.project').forEach(card => {
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    applyLang(detectLang());
+  })();
+</script>
+</body>
+</html>
